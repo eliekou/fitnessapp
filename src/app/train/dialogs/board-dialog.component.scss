@@ -1,0 +1,33 @@
+h1{
+  margin-left:2vw;
+}
+.content {
+  overflow: auto;
+  height: auto;
+  padding: 20px;
+  width: 100%;
+/*   display:flex;
+  flex-direction:column; */
+}
+.toggle{
+
+}
+/* .content {
+  overflow: hidden;
+  height: auto;
+  padding: 20px;
+  width: 100%;
+} */
+.fields{
+  display:flex;
+  flex-direction: column;
+  margin-top:2vw;
+
+}
+.first{
+/*   height:20px;
+  border:2px black;
+  background-color: red;
+  width:20px; */
+  //margin:2vw;
+}
