@@ -1,0 +1,39 @@
+
+
+
+
+<mat-card class="small-tracker">
+  <mat-card-header>
+    <mat-card-title *ngIf="userM">{{userM[0].name}}</mat-card-title>
+    <mat-card-subtitle>Beginner User</mat-card-subtitle>
+    <div mat-card-avatar class="example-header-image"></div>
+  </mat-card-header>
+
+  <mat-card-content class="secondary-card" *ngIf="userM">
+
+    <mat-card class ="secondary-card-items" appearance="outlined">
+      <mat-card-content class="user-content"> Ranking: {{userM[0].ranking}}</mat-card-content>
+    </mat-card>
+
+    <mat-card class ="secondary-card-items" appearance="outlined">
+      <mat-card-content class="user-content"> Id: {{userM[0].id}} </mat-card-content>
+    </mat-card>
+
+    <mat-card class ="secondary-card-items" appearance="outlined">
+      <mat-card-content class="user-content"> Points: {{userM[0].points}}</mat-card-content>
+    </mat-card>
+    <!-- {{userM[0].ranking}} -->
+<!--     <app-small-tracker >
+      {{userM.name}}
+    </app-small-tracker>" -->
+  </mat-card-content>
+   <h4>
+    User: {{userM}}
+  </h4>
+</mat-card>
+<!-- <mat-grid-list cols="2" rowHeight="1:2">
+  <mat-grid-tile>1</mat-grid-tile>
+  <mat-grid-tile>2</mat-grid-tile>
+  <mat-grid-tile>3</mat-grid-tile>
+  <mat-grid-tile>4</mat-grid-tile>
+</mat-grid-list> -->
