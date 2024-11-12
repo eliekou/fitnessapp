@@ -28,7 +28,7 @@
 </mat-tab-group> -->
 <mat-tab-group>
   <mat-tab label="My sessions">
-      <mat-list-item *ngFor="let training of trainings" [routerLink]="training.id" role="list">
+      <mat-list-item *ngFor="let training of trainings" [routerLink]="training.route_id" role="list">
         {{training.name}}
       </mat-list-item>
   </mat-tab>
