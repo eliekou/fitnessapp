@@ -45,12 +45,20 @@ export class TrainingMenuComponent {
       data:{
         name:"",
         exercice:"",
-        followers:"0",
-        isPublic:"false",
-        time:"10"
+        followers:"",
+        isPublic:"",
+        time:""
       }
 
-    })
+    });
+
+    dialogRef.afterClosed().subscribe(
+      result=>{
+        console.log(result);
+        console.log("calling createTraining");
+        this.serv.createTraining2(result)
+      })
+
   }
 
 /*   goToTraining(training:any){
