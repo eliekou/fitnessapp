@@ -52,6 +52,30 @@ export class TrainService {
       .update({exercices})
     }
 
+/*     createTraining(){
+      return this.db.collection('user').doc('4j96oNu91MIiQOJoiex5').collection('trainings').add(
+
+      )
+
+    } */
+  async createTraining2(data: Training) {
+    const user = await this.afAuth.currentUser;
+    console.log("User retrieved",user);
+    //this.db.collection()
+    return this.db.collection('user').doc('4j96oNu91MIiQOJoiex5').collection('trainings').add({
+
+      name:data.name,
+      time:data.time,
+      exercice:[
+        {name:"incline",
+        reps:"20",
+        weight:"20"}],
+      id:2,
+      isPublic:false,
+      creatorId: user?.uid,
+
+    });
+  }
 
     updateExercicesValues(){
 

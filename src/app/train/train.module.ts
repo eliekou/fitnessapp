@@ -14,6 +14,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { ExerciceDialogComponent } from './dialogs/exercice-dialog.component';
 import { DeleteButtonComponent } from '../shared/delete-button/delete-button.component';
 import { TrainingDialogComponent } from './dialogs/training-dialog.component';
+import { CdTimerModule } from 'angular-cd-timer';
 @NgModule({
   declarations: [
     TrainingMenuComponent,
@@ -31,6 +32,7 @@ import { TrainingDialogComponent } from './dialogs/training-dialog.component';
     MatInputModule,
     FormsModule,
     MatDialogModule,
+    CdTimerModule
 
   ],
 
