@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { Exercice, Training } from '../training.model';
@@ -14,7 +14,7 @@ import { ExerciceDialogComponent } from '../dialogs/exercice-dialog.component';
 })
 export class TrainingComponent {
 
-
+  @ViewChild('myTimer', { static: false }) myTimer;
   //@Input() training;
 
   training:Training;
@@ -22,35 +22,33 @@ export class TrainingComponent {
   sub:Subscription;
 
   isChecked:boolean[];
+  isStarted: boolean[];
 
   constructor(private route: ActivatedRoute, private db:AngularFirestore, private serv:TrainService,private dialog:MatDialog){
 
   }
-
+  isStart(i){
+     this.myTimer.start();
+    this.isStarted[i] = true;
+    console.log("isStrat caleld");
+  }
   ngOnInit(){
     this.id =  this.route.snapshot.paramMap.get('id');
     console.log("Id retrieved",this.id);
     this.sub = this.db.collection('user').doc('4j96oNu91MIiQOJoiex5').collection('trainings', ref =>
-              ref.where('id', '==', this.id)
-            ).valueChanges().subscribe((result)=>{
+              ref.where('route_id', '==', this.id)
+            ).valueChanges({idField:'id'})
+          .subscribe((result)=>{
           //console.log("RESULT",result);
           console.log("TRAINING RESULT",result)
           this.training = result[0];
           this.isChecked = new Array(this.training.exercices.length).fill(false);
+
+          console.log("Checked",this.isChecked);
+          this.isStarted = Array(this.training.exercices.length).fill(false);
+          console.log("Started",this.isStarted);
         }
-
         )
-/*         this.sub = this.serv.getUserTrainings().subscribe((result)=>{
-          console.log("Trainings received",result);
-          this.training = result[0];
-        }) */
-
-    //console.log("TRAININGS",this.training)
-        // Initialiser isChecked en fonction du nombre d'exercices
-
-          /* this.isChecked = new Array(this.training.exercices.length).fill(false); */
-
-    console.log("Checked",this.isChecked);
   }
   ngOnDestroy(){
     console.log("COMPONENT DESTROYED")
@@ -80,10 +78,11 @@ export class TrainingComponent {
   dialogRef.afterClosed().subscribe(result =>{
 
       console.log(result);
-        console.log("Dialog closed");
-        if(result/* .isNew */){
+        console.log("Dialog closed to add an exercice",this.id);
+        if(result){
           console.log("Dialog closed 2");
-          this.serv.updateExercicesForTraining(this.id,[
+          this.serv.updateExercicesForTraining(this.training.id,
+            [
             ...this.training.exercices,
             result
           ]);//ne fonctionne pas quand on cree une nouvelle tache dans un board vide.
@@ -122,6 +121,10 @@ export class TrainingComponent {
         } */
   /*   } */
   })
+  }
+
+  handleDeleteTraining(){
+    this.serv.deleteTraining(this.training.id);
   }
 
   handleDelete(exercice){

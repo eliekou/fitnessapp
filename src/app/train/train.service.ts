@@ -10,8 +10,10 @@ import firebase from 'firebase/compat/app';
 })
 export class TrainService {
 
-  constructor(private afAuth:AngularFireAuth,private db:AngularFirestore) {
+  newId: number;
 
+  constructor(private afAuth:AngularFireAuth,private db:AngularFirestore) {
+    this.newId = 9;
   }
 
    async getUserTrainings2(){
@@ -45,37 +47,47 @@ export class TrainService {
 
     updateExercicesForTraining(trainingId,exercices:Exercice[]){
       console.log("UPDATE CALLED");
-      return this.db.collection('user').doc('4j96oNu91MIiQOJoiex5').collection('trainings', ref =>
-        ref.where('id', '==', trainingId)
-      )
-      .doc("jBm2FXbZxsSLYE2CEwFi")
+      return this.db.collection('user')
+
+      .doc('4j96oNu91MIiQOJoiex5')
+      .collection('trainings')
+      .doc(trainingId)
       .update({exercices})
     }
 
-/*     createTraining(){
-      return this.db.collection('user').doc('4j96oNu91MIiQOJoiex5').collection('trainings').add(
-
-      )
-
-    } */
   async createTraining2(data: Training) {
     const user = await this.afAuth.currentUser;
     console.log("User retrieved",user);
-    //this.db.collection()
+
+    let newId = (this.newId + 1).toString();
+
+
     return this.db.collection('user').doc('4j96oNu91MIiQOJoiex5').collection('trainings').add({
 
       name:data.name,
       time:data.time,
-      exercice:[
+      exercices:[
         {name:"incline",
         reps:"20",
         weight:"20"}],
-      id:2,
+      route_id:newId,
       isPublic:false,
       creatorId: user?.uid,
 
     });
   }
+
+    /**
+   * Delete Training
+   */
+    deleteTraining(trainingId: string) {
+      return this.db.collection('user')
+
+      .doc('4j96oNu91MIiQOJoiex5')
+      .collection('trainings')
+      .doc(trainingId)
+      .delete();
+    }
 
     updateExercicesValues(){
 
