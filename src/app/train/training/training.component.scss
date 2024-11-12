@@ -14,8 +14,32 @@ margin-left:2vw;}
   flex-direction:row;
   margin-bottom:4vw;
 }
-
-
+.buttons2{
+  display:flex;
+  flex-direction:row;
+  gap:1vw;
+  margin:2vw;
+  margin:auto;
+  //border:2px solid blue;
+  margin-top:10px;
+}
+.stop-buttons{
+  display:flex;
+  flex-direction:row;
+  margin:2vw;
+  margin:auto;
+  border:2px solid blue;
+  margin-top:10px;
+}
+cd-timer{
+  font-size: large;
+  border:2px solid black;
+  position:center;
+  border-radius: 30px;
+  padding:8px;
+  size:auto;
+  margin-top:10px;
+}
 
 .secondary-card{
   display: flex;
@@ -26,7 +50,7 @@ margin-left:2vw;}
   justify-content: start;
   flex-direction: column;
   //margin-top:2vw;
-  border: 2px solid orange;
+  border: 2px solid black;
 }
 .secondary-card-items{
   //justify-content: start;
@@ -36,7 +60,7 @@ margin-left:2vw;}
   //margin:10px;
   //align-self: stretch;
   align-self: flex-start;
-  border:4px solid violet;
+  border:4px solid rgb(102, 102, 48);
 
 }
 /* .secondary-card-items:hover{
@@ -46,6 +70,7 @@ margin-left:2vw;}
   //margin:34px;
   width:auto;
   margin:2vw;
+  padding:4px;
   border:2px solid red;
   white-space: normal;
   word-wrap: break-word; /* Force le retour à la ligne quand le texte est trop long */

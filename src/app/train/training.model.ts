@@ -1,5 +1,6 @@
 export interface Training{
   id?:string;
+  route_id?:string;
   isPublic?:false;
   name?:string;
   time?:string;

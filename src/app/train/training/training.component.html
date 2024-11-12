@@ -36,11 +36,37 @@
     <button mat-stroked-button (click)="openDialog()">
       <mat-icon>add</mat-icon>
     </button>
+
+
+    <app-delete-button (delete)="handleDeleteTraining()"> Delete Training </app-delete-button>
     <div class="secondary-card"  *ngFor="let exercice of training?.exercices;let i = index">
 
 <!--       <button class = "modify" mat-stroked-button (click)="openDialogExercice()">
         Modify
       </button> -->
+      <div class = "buttons2">
+        <button mat-stroked-button id ="start-button" (click)="isStarted[i] ? myTimer.resume():isStart(i)">Démarrer</button>
+<!--         <button nat-stroked-button id="stop-button" (click)="myTimer.stop()">Arrêter</button> -->
+        <button mat-stroked-button id="reset-button" (click)="myTimer.reset()">Réinitialiser</button>
+    </div>
+
+    <div *ngIf = "isStarted[i]" class = "stop-buttons" >
+      <button  mat-stroked-button  id="stop-button" (click)="myTimer.stop()">Arrêter</button>
+    </div>
+
+    <cd-timer
+      [autoStart]="false"
+      [countdown]="true"
+      [startTime]="60"
+      #myTimer
+      (start)="onStart()"
+      (stop)="onStop()"
+      (reset)="onReset()"
+      format="ms"
+      >
+      Timer
+
+    </cd-timer>
 
       <div class ="secondary-card-items" appearance="outlined">
         <div class="user-content"> Name: {{exercice.name}}</div>
