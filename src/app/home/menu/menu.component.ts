@@ -24,7 +24,7 @@ export class MenuComponent {
     this.sub = this.home.getUserInfo().subscribe(user=>{
       console.log("user received",user);
       this.userM=user;
-  console.log("User retrieved from menu",this.userM);
+    console.log("User retrieved from menu",this.userM);
 });
   }
 

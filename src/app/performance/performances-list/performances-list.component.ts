@@ -17,11 +17,13 @@ export class PerformancesListComponent {
 
   sub: Subscription;
 
+  displayedColumns: string[] = ['demo-perf_name', 'demo-perf_value', 'demo-perf_date'];
   constructor(private perfService: PerformanceService){
 
   }
 
   ngOnInit(){
+
     this.sub = this.perfService.getUserInfos().subscribe(
       (result)=>{
         console.log(result);

@@ -10,7 +10,7 @@ import { DeleteButtonComponent } from '../shared/delete-button/delete-button.com
 import { CdTimerModule } from 'angular-cd-timer';
 import { PerformanceRoutingModule } from './performance-routing.module'
 import { PerformancesListComponent } from './performances-list/performances-list.component';
-
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -19,7 +19,12 @@ import { PerformancesListComponent } from './performances-list/performances-list
   imports: [
     CommonModule,
     SharedModule,
-    PerformanceRoutingModule
+    PerformanceRoutingModule,
+    MatInputModule,
+    MatButtonToggleModule,
+    MatDialogModule,
+    MatTableModule
+
   ]
 })
 export class PerformanceModule { }

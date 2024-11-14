@@ -1,17 +1,21 @@
 
 <div class="menu-container">
 
-<div class="menu-profile">
-  <app-training-calendar></app-training-calendar>
+  <div class="menu-profile">
+    <app-training-calendar></app-training-calendar>
 
-  <app-small-tracker *ngIf="userM" [userM]="userM"></app-small-tracker>
-</div>
+    <app-small-tracker *ngIf="userM" [userM]="userM"></app-small-tracker>
+  </div>
 
-<button mat-stroked-button class="training-button" routerLink="/training">Commencer un entrainement</button>
+  <div class = "menu-buttons">
+    <button mat-stroked-button class="training-button" routerLink="/training">Commencer un entrainement</button>
 
-<div class="menu-pr">
-  <app-pr *ngIf="userM" [userM]="userM"></app-pr>
-</div>
+    <button mat-stroked-button class="performance-button" routerLink="/performances">Mon carnet de perfs</button>
+  </div>
+
+  <div class="menu-pr">
+    <app-pr *ngIf="userM" [userM]="userM"></app-pr>
+  </div>
 
 </div>
 

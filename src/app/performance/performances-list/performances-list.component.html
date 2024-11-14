@@ -1,4 +1,32 @@
-<p>performances-list works!</p>
-<div class="perf" *ngFor="let perf of performances">
-  {{perf.perf_name}}
-</div>
+
+
+<table mat-table [dataSource]="performances" class="mat-elevation-z8 demo-table">
+  <!-- Position Column -->
+  <ng-container matColumnDef="demo-perf_name">
+    <th mat-header-cell *matHeaderCellDef> Exercice </th>
+    <td mat-cell *matCellDef="let element"> {{element.perf_name}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="demo-perf_value">
+    <th mat-header-cell *matHeaderCellDef> Weight</th>
+    <td mat-cell *matCellDef="let element"> {{element.perf_value_kg}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="demo-perf_date">
+    <th mat-header-cell *matHeaderCellDef> Date </th>
+    <td mat-cell *matCellDef="let element"> {{element.perf_date}} </td>
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+  [ngClass]="{'row-success': row.success, 'row-failure': !row.success}"
+  ></tr>
+</table>
+
+
+
+
+

@@ -4,6 +4,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { switchMap } from 'rxjs';
 import { Exercice, Training } from './training.model';
 import firebase from 'firebase/compat/app';
+import { user } from './../home/user.model';
 //import { user } from './user.model';
 @Injectable({
   providedIn: 'root'
@@ -43,16 +44,32 @@ export class TrainService {
       )
     }
 
+    getUserInfo(){
+
+      console.log("User connected",this.afAuth.authState)
+      return this.afAuth.authState.pipe(
+        switchMap(user => {
+          if (user) {
+            return this.db.collection<user>('user', ref =>
+              ref.where('uid', '==', user.uid)).valueChanges({ idField: 'id' });
+          }
+          else{
+            console.log("User is not connected");
+            return [];
+          }
+        }))
+      }
+
+
 
 
     updateExercicesForTraining(trainingId,exercices:Exercice[]){
       console.log("UPDATE CALLED");
       return this.db.collection('user')
-
-      .doc('4j96oNu91MIiQOJoiex5')
-      .collection('trainings')
-      .doc(trainingId)
-      .update({exercices})
+        .doc('4j96oNu91MIiQOJoiex5')
+        .collection('trainings')
+        .doc(trainingId)
+        .update({exercices})
     }
 
   async createTraining2(data: Training) {
