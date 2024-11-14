@@ -15,6 +15,7 @@ import { ExerciceDialogComponent } from './dialogs/exercice-dialog.component';
 import { DeleteButtonComponent } from '../shared/delete-button/delete-button.component';
 import { TrainingDialogComponent } from './dialogs/training-dialog.component';
 import { CdTimerModule } from 'angular-cd-timer';
+import { CompletionDialogComponent } from './dialogs/completion-dialog.component';
 @NgModule({
   declarations: [
     TrainingMenuComponent,
@@ -22,7 +23,8 @@ import { CdTimerModule } from 'angular-cd-timer';
     TrainingHomeComponent,
     BoardDialogComponent,
     ExerciceDialogComponent,
-    TrainingDialogComponent
+    TrainingDialogComponent,
+    CompletionDialogComponent
   ],
   imports: [
     CommonModule,

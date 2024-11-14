@@ -1,5 +1,6 @@
 export interface user{
   id?:string;
+  uid?:string;
   name?:string;
   followers?:string;
   followed?:string;

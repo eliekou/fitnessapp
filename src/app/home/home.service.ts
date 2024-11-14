@@ -28,7 +28,7 @@ export class HomeService {
           console.log("user.uid",user.uid);
           //IZG3vFsVUBYJC7uwnCAy9osYSSn1
           return this.db.collection<user>('user', ref =>
-            ref.where('id', '==', user.uid)).valueChanges({ idField: 'id' });
+            ref.where('uid', '==', user.uid)).valueChanges({ idField: 'id' });
         }
 
         else{

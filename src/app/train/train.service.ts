@@ -100,10 +100,10 @@ export class TrainService {
         ref.where('id', '==', trainingId)
       )
       .doc("jBm2FXbZxsSLYE2CEwFi"));
-      return this.db.collection('user').doc('4j96oNu91MIiQOJoiex5').collection('trainings', ref =>
-        ref.where('id', '==', trainingId)
-      )
-      .doc("jBm2FXbZxsSLYE2CEwFi")
+
+      return this.db.collection('user').doc('4j96oNu91MIiQOJoiex5')
+      .collection('trainings')
+      .doc(trainingId)
       .update({
         exercices:firebase.firestore.FieldValue.arrayRemove(exercice)
       });
