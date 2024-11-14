@@ -8,8 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import {MatDialogModule} from '@angular/material/dialog';
 import { DeleteButtonComponent } from '../shared/delete-button/delete-button.component';
 import { CdTimerModule } from 'angular-cd-timer';
+import { PerformanceRoutingModule } from './performance-routing.module'
 import { PerformancesListComponent } from './performances-list/performances-list.component';
-
 
 
 @NgModule({
@@ -17,7 +17,9 @@ import { PerformancesListComponent } from './performances-list/performances-list
     PerformancesListComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    SharedModule,
+    PerformanceRoutingModule
   ]
 })
 export class PerformanceModule { }

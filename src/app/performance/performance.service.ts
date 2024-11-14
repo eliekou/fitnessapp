@@ -18,6 +18,7 @@ export class PerformanceService {
 
   ngOninit(){
     this.user = this.getUserInfos()[0];
+    console.log(this.user)
 
   }
 
@@ -26,8 +27,10 @@ export class PerformanceService {
     return this.afAuth.authState.pipe(
       switchMap(user => {
         if(user) {
+          console.log(this.db.collection<user>('user', ref =>
+            ref.where('uid', '==', user.uid)).valueChanges({ idField: 'id' }));
           return this.db.collection<user>('user', ref =>
-            ref.where('uid', '==', user.uid)).valueChanges({ idField: 'id' });
+            ref.where('uid', '==', user.uid)).;
         }
         else{
           return[];
@@ -36,11 +39,12 @@ export class PerformanceService {
     )
   }
 
-  getUserPerformances(){
+  getUserPerformances(userDocId, uid){
     return this.db.collection('user')
-      .doc(this.user.id)
-      .collection('performances')
-      .doc(this.user.uid);
+      .doc(userDocId)
+      .collection('performances', ref =>
+        ref.where('uid', '==', uid)).valueChanges();
+
   }
 
 
