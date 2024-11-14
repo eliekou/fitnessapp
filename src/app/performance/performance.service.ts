@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { switchMap } from 'rxjs';
 import { user } from'./../home/user.model';
+import { Performance } from "./performance.model";
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,16 @@ export class PerformanceService {
       .doc(userDocId)
       .collection('performances', ref =>
         ref.where('uid', '==', uid)).valueChanges();
+  }
+
+  updatePerformancesForUser(userDocId, perfId, perfs: Performance[]){
+    //perfId est egal a l'uid sur le document
+    return this.db.collection('user')
+      .doc(userDocId)
+      .collection('performance')
+      .doc(perfId)
+      .update({perfs});
+
   }
 
 

@@ -11,10 +11,13 @@ import { CdTimerModule } from 'angular-cd-timer';
 import { PerformanceRoutingModule } from './performance-routing.module'
 import { PerformancesListComponent } from './performances-list/performances-list.component';
 import {MatTableModule} from '@angular/material/table';
+import { PerfDialogComponent } from './dialogs/perf-dialog.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
-    PerformancesListComponent
+    PerformancesListComponent,
+    PerfDialogComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +26,9 @@ import {MatTableModule} from '@angular/material/table';
     MatInputModule,
     MatButtonToggleModule,
     MatDialogModule,
-    MatTableModule
+    MatTableModule,
+    MatFormFieldModule,
+    FormsModule
 
   ]
 })
