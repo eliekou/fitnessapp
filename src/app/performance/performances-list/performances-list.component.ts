@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { PerformanceService} from './../performance.service';
 import { Subscription } from 'rxjs';
 import { Performance } from './../performance.model';
+import { MatDialog } from '@angular/material/dialog';
+import { PerfDialogComponent } from '../dialogs/perf-dialog.component';
 @Component({
   selector: 'app-performances-list',
   templateUrl: './performances-list.component.html',
@@ -18,7 +20,7 @@ export class PerformancesListComponent {
   sub: Subscription;
 
   displayedColumns: string[] = ['demo-perf_name', 'demo-perf_value', 'demo-perf_date'];
-  constructor(private perfService: PerformanceService){
+  constructor(private perfService: PerformanceService, private dialog: MatDialog){
 
   }
 
@@ -40,22 +42,28 @@ export class PerformancesListComponent {
 
       }
     )
-    //this.sub.unsubscribe()
-    console.log(this.uid);
-    console.log(this.userDocId)
-
-    /* this.sub.unsubscribe()
-    this.sub = this.perfService.getUserPerformances(this.userDocId, this.uid).subscribe(
-      (result) =>
-      3333333333333333333333333333{
-      console.log(result)
-      //this.performances = result[0]['perfs'];
-      }
-    ) */
-
-
-
   }
 
+  openDialog(){
+    const dialogRef = this.dialog.open(PerfDialogComponent,
+      {
+        width:'500px',
+        data:{
+            perf_name:"",
+            perf_value_kg:"",
+            perf_date:"",
+            perf_sucess:""
+        }
+      })
+
+
+      dialogRef.afterClosed().subscribe(
+        (result) => {
+          if (result){
+            this.perfService.updatePerformancesForUser(this.userDocId, this.uid, result);
+          }
+        }
+      )
+  }
 
 }

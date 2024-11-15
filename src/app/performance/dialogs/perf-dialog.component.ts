@@ -1,28 +1,22 @@
 import { Inject ,Component } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { PerformanceService } from '../performance.service';
+import { provideNativeDateAdapter} from '@angular/material/core';
+
 @Component({
   selector: 'app-perf-dialog',
+  styleUrls: ['./perf-dialog.scss'],
+  providers: [provideNativeDateAdapter()],
   template: `
-    <p>
-      perf-dialog works!
-    </p>
-
     <h1 mat-dialog-title>Exercice</h1>
     <div mat-dialog-content class="content">
 
-
-      <mat-button-toggle-group
-        #group="matButtonToggleGroup"
-        [(ngModel)]="data.perf_name"
-        class="first"
-      >
-        <mat-button-toggle class = "toggle"*ngFor="let opt of labelOptions" [value]="opt">
-         {{
-            opt
-          }}
-        </mat-button-toggle>
-      </mat-button-toggle-group>
+      <mat-form-field>
+        <mat-label>Select</mat-label>
+        <mat-select [(ngModel)]="data.perf_name" class="first">
+          <mat-option *ngFor="let opt of labelOptions" [value]="opt"  >{{opt}}</mat-option>
+        </mat-select>
+      </mat-form-field>
       <br>
 
       <div class ="fields">
@@ -44,30 +38,34 @@ import { PerformanceService } from '../performance.service';
       </div>
 
 
-      <mat-button-toggle-group
-        #group="matButtonToggleGroup"
-        [(ngModel)]="data.sucess"
-        class="third"
-      >
-        <mat-button-toggle class = "toggle"*ngFor="let opt of [false,true]" [value]="opt">
-         {{
-            opt
-          }}
-        </mat-button-toggle>
-      </mat-button-toggle-group>
-      <br>
+      <mat-form-field class ="third">
+        <mat-label>Choose a date</mat-label>
+        <input matInput [matDatepicker]="picker">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <div class = "perf_sucess">
+
+        <mat-button-toggle-group
+          #group="matButtonToggleGroup"
+          [(ngModel)]="data.sucess"
+          class="third">
+          <mat-button-toggle class = "toggle"*ngFor="let opt of [false,true]" [ngClass]="{'sucess':opt, 'failure':!opt}"[value]="opt">
+            {{opt}}
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+        <br>
+      </div>
 
 
-<!--       <app-delete-button
-        (delete)="handleTaskDelete()"
-        *ngIf="!data.isNew"
-      ></app-delete-button> -->
     </div>
     <div mat-dialog-actions>
         <button mat-button [mat-dialog-close]="data">
           Ajouter la performance
         </button>
-        </div>
+    </div>
   `,
   styles: ``
 })
@@ -79,6 +77,6 @@ export class PerfDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
   ){}
 
-  labelOptions = ['incline','squat','deadlift','curls']
+  labelOptions = ['Incline Chest','Shoulder Press','Lateral Raises','Tricep Cable','Bicep Cable','squat','deadlift','Arm curls']
 
 }
