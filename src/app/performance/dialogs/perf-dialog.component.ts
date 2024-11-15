@@ -8,11 +8,11 @@ import { provideNativeDateAdapter} from '@angular/material/core';
   styleUrls: ['./perf-dialog.scss'],
   providers: [provideNativeDateAdapter()],
   template: `
-    <h1 mat-dialog-title>Exercice</h1>
+    <h1 mat-dialog-title>My performance</h1>
     <div mat-dialog-content class="content">
 
       <mat-form-field>
-        <mat-label>Select</mat-label>
+        <mat-label>Exercice to select</mat-label>
         <mat-select [(ngModel)]="data.perf_name" class="first">
           <mat-option *ngFor="let opt of labelOptions" [value]="opt"  >{{opt}}</mat-option>
         </mat-select>
@@ -48,6 +48,8 @@ import { provideNativeDateAdapter} from '@angular/material/core';
 
       <div class = "perf_sucess">
 
+      <h4> Sucess ?</h4>
+
         <mat-button-toggle-group
           #group="matButtonToggleGroup"
           [(ngModel)]="data.sucess"
@@ -55,15 +57,17 @@ import { provideNativeDateAdapter} from '@angular/material/core';
           <mat-button-toggle class = "toggle"*ngFor="let opt of [false,true]" [ngClass]="{'sucess':opt, 'failure':!opt}"[value]="opt">
             {{opt}}
           </mat-button-toggle>
+
         </mat-button-toggle-group>
         <br>
+
       </div>
 
 
     </div>
     <div mat-dialog-actions>
         <button mat-button [mat-dialog-close]="data">
-          Ajouter la performance
+          Add performance
         </button>
     </div>
   `,
