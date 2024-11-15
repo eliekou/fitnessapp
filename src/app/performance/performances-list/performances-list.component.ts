@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { Performance } from './../performance.model';
 import { MatDialog } from '@angular/material/dialog';
 import { PerfDialogComponent } from '../dialogs/perf-dialog.component';
+import { performance } from 'perf_hooks';
 @Component({
   selector: 'app-performances-list',
   templateUrl: './performances-list.component.html',
@@ -19,7 +20,7 @@ export class PerformancesListComponent {
 
   sub: Subscription;
 
-  displayedColumns: string[] = ['demo-perf_name', 'demo-perf_value', 'demo-perf_date'];
+  displayedColumns: string[] = ['demo-perf_name', 'demo-perf_value', 'demo-perf_reps', 'demo-perf_date'];
   constructor(private perfService: PerformanceService, private dialog: MatDialog){
 
   }
@@ -37,6 +38,15 @@ export class PerformancesListComponent {
 
           this.performances = result[0]['perfs'];
 
+          for ( let i = 0; i < this.performances.length; i ++){
+            this.performances[i].perf_date2 = this.performances[i].perf_date.toDate().toLocaleDateString('fr-FR', {
+              weekday: 'long', // affiche le jour de la semaine (ex. : jeudi)
+              year: 'numeric',
+              month: 'long', // affiche le mois complet (ex. : novembre)
+              day: 'numeric'
+            });;
+          }
+
           console.log(this.performances)
           });
 
@@ -51,16 +61,21 @@ export class PerformancesListComponent {
         data:{
             perf_name:"",
             perf_value_kg:"",
+            perf_reps:"",
             perf_date:"",
             perf_sucess:""
         }
       })
 
-
       dialogRef.afterClosed().subscribe(
         (result) => {
+          console.log("result dialog", result);
+
           if (result){
-            this.perfService.updatePerformancesForUser(this.userDocId, this.uid, result);
+            this.perfService.updatePerformancesForUser(this.userDocId, this.uid,
+              [
+              ...this.performances,
+              result]);
           }
         }
       )

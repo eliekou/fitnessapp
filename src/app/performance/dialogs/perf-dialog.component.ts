@@ -25,17 +25,23 @@ import { FormControl, Validators } from '@angular/forms';
         <textarea
           placeholder="Weights"
           matInput
+          [formControl]="perf_value_kg"
           [(ngModel)]="data.perf_value_kg"
         >Weights</textarea>
-
-        @if (data.perf_value_kg.invalid) {
-      <mat-error>{{errorMessage()}}</mat-error>
-    }
+        <mat-error *ngIf="perf_value_kg.hasError('required')">
+            Le nombre de répétitions est requis.
+          </mat-error>
       </mat-form-field>
 
       <mat-form-field floatLabel="always">
         <mat-label>Reps</mat-label>
-        <input matInput type="number"  [(ngModel)]="data.perf_reps" class="example-right-align" placeholder="0" />
+        <input matInput type="number"  [(ngModel)]="data.perf_reps"
+        [formControl]="perf_reps"
+        class="example-right-align" placeholder="0" />
+
+        <mat-error *ngIf="perf_reps.hasError('required')">
+            Le nombre de répétitions est requis.
+          </mat-error>
         <!-- <span matTextPrefix>$&nbsp;</span>
         <span matTextSuffix>.00</span> -->
       </mat-form-field>
@@ -69,7 +75,10 @@ import { FormControl, Validators } from '@angular/forms';
 
     </div>
     <div mat-dialog-actions class ="final">
-        <button mat-button [mat-dialog-close]="data">
+        <button mat-button
+        [disabled]="perf_value_kg.invalid || perf_reps.invalid"
+        [mat-dialog-close]="perf_value_kg.valid && perf_reps.valid ? data : null"
+        [mat-dialog-close]="data">
           Add performance !
         </button>
     </div>
@@ -86,6 +95,7 @@ export class PerfDialogComponent {
 
   labelOptions = ['Bench Press','Incline Chest','Shoulder Press','Lateral Raises','Tricep Cable','Bicep Cable','Squat','Deadlift','Arm curls']
   readonly perf_value_kg = new FormControl('', [Validators.required]);
+  readonly perf_reps = new FormControl('', [Validators.required]);
   errorMessage = signal('');
 
 }
