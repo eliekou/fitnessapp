@@ -1,4 +1,7 @@
 
+<button class = "add-button" mat-stroked-button (click)="openDialog()"> Add a performance
+  <mat-icon>add</mat-icon>
+</button>
 
 <table mat-table [dataSource]="performances" class="mat-elevation-z8 demo-table">
   <!-- Position Column -->
@@ -21,8 +24,8 @@
 
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-  [ngClass]="{'row-success': row.success, 'row-failure': !row.success}"
+  <tr mat-row *matRowDef="let myrow; columns: displayedColumns"
+  [ngClass]="{'row-success': myrow.sucess, 'row-failure': !myrow.sucess}"
   ></tr>
 </table>
 

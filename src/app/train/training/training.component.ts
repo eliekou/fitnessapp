@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { Exercice, Training } from '../training.model';
@@ -7,6 +7,7 @@ import { TrainService } from '../train.service';
 import { MatDialog } from '@angular/material/dialog';
 import { BoardDialogComponent } from '../dialogs/board-dialog.component';
 import { ExerciceDialogComponent } from '../dialogs/exercice-dialog.component';
+import { CompletionDialogComponent } from '../dialogs/completion-dialog.component';
 @Component({
   selector: 'app-training',
   templateUrl: './training.component.html',
@@ -28,7 +29,7 @@ export class TrainingComponent {
 
   }
   isStart(i){
-     this.myTimer.start();
+    this.myTimer.start();
     this.isStarted[i] = true;
     console.log("isStrat caleld");
   }
@@ -41,6 +42,9 @@ export class TrainingComponent {
           .subscribe((result)=>{
           //console.log("RESULT",result);
           console.log("TRAINING RESULT",result)
+
+
+
           this.training = result[0];
           this.isChecked = new Array(this.training.exercices.length).fill(false);
 
@@ -123,13 +127,28 @@ export class TrainingComponent {
   })
   }
 
+  get allChecked(): boolean{
+/*     if (this.isChecked.every(value => value === true)== true){
+      console.log("Exercice finished");
+      const dialogRef = this.dialog.open(CompletionDialogComponent);
+    } */
+    //const dialogRef = this.dialog.open(CompletionDialogComponent);
+    return (this.isChecked.every(value => value === true)== true);
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['isChecked']) {
+      // Code exécuté lorsque la propriété someProp change, équivalent à useEffect(() => { ... }, [someProp])
+      console.log('someProp a changé:');
+      this.allChecked;
+    }
+  }
   handleDeleteTraining(){
     this.serv.deleteTraining(this.training.id);
   }
 
   handleDelete(exercice){
     console.log("We are deleting");
-    this.serv.deleteExerciceOfTraining(this.id,exercice)
+    this.serv.deleteExerciceOfTraining(this.training.id,exercice)
   }
 
 }

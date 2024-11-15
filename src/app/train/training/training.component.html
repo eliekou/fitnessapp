@@ -1,38 +1,6 @@
 
-
-<!--
-<mat-card class="outer-card"></mat-card>
-  <mat-card-header> -->
-    <!-- Slot for the handle -->
-<!--     <ng-content></ng-content> -->
-<!--     <mat-card-title>
-      {{ training.creatorName }}
-    </mat-card-title> -->
-<!--     <mat-card-subtitle>
-      {{ training.followers }}
-    </mat-card-subtitle> -->
-
-<!--   </mat-card-header> -->
-
-
-<!--   <mat-selection-list
-    *ngFor="let exercice of training.exercices;">
-      <mat-list-option>{{exercice.name}}</mat-list-option>
-      <mat-list-option>{{exercice.reps}}</mat-list-option>
-      <mat-list-option>{{exercice.weight}}</mat-list-option>
-  </mat-selection-list> -->
-
-<!--   <mat-card-header>
-    <mat-card-title *ngIf="training">{{training.creatorName}}</mat-card-title>
-    <mat-card-subtitle>Beginner User</mat-card-subtitle>
-    <div mat-card-avatar class="example-header-image"></div>
-  </mat-card-header> -->
   <div class="small-tracker">
- <!--    <mat-card-header>
-      <mat-card-title *ngIf="training">{{training.creatorName}}</mat-card-title>
-      <mat-card-subtitle>Beginner User</mat-card-subtitle>
-      <div mat-card-avatar class="example-header-image"></div>
-    </mat-card-header> -->
+
     <button mat-stroked-button (click)="openDialog()">
       <mat-icon>add</mat-icon>
     </button>
@@ -41,37 +9,33 @@
     <app-delete-button (delete)="handleDeleteTraining()"> Delete Training </app-delete-button>
     <div class="secondary-card"  *ngFor="let exercice of training?.exercices;let i = index">
 
-<!--       <button class = "modify" mat-stroked-button (click)="openDialogExercice()">
-        Modify
-      </button> -->
+
       <div class = "buttons2">
         <button mat-stroked-button id ="start-button" (click)="isStarted[i] ? myTimer.resume():isStart(i)">Démarrer</button>
-<!--         <button nat-stroked-button id="stop-button" (click)="myTimer.stop()">Arrêter</button> -->
         <button mat-stroked-button id="reset-button" (click)="myTimer.reset()">Réinitialiser</button>
-    </div>
+      </div>
 
-    <div *ngIf = "isStarted[i]" class = "stop-buttons" >
-      <button  mat-stroked-button  id="stop-button" (click)="myTimer.stop()">Arrêter</button>
-    </div>
+      <div *ngIf = "isStarted[i]" class = "stop-buttons" >
+        <button  mat-stroked-button  id="stop-button" (click)="myTimer.stop()">Arrêter</button>
+      </div>
 
-    <cd-timer
-      [autoStart]="false"
-      [countdown]="true"
-      [startTime]="60"
-      #myTimer
-      (start)="onStart()"
-      (stop)="onStop()"
-      (reset)="onReset()"
-      format="ms"
-      >
-      Timer
+      <cd-timer
+        [autoStart]="false"
+        [countdown]="true"
+        [startTime]="60"
+        #myTimer
+        (start)="onStart()"
+        (stop)="onStop()"
+        (reset)="onReset()"
+        format="ms"
+        >
+        Timer
 
-    </cd-timer>
+      </cd-timer>
 
-      <div class ="secondary-card-items" appearance="outlined">
+      <div class ="secondary-card-items"  appearance="outlined">
         <div class="user-content"> Name: {{exercice.name}}</div>
-        <!-- [(ngModel)]="isChecked" -->
-        <mat-checkbox class="exercice-checkbox" [(ngModel)]="isChecked[i]">Done</mat-checkbox>
+        <mat-checkbox class="exercice-checkbox" [(ngModel)]="isChecked[i]" (click)="isChecked">Done</mat-checkbox>
       </div>
 
       <div class ="secondary-card-items" appearance="outlined">
@@ -82,21 +46,21 @@
         <div class="user-content"> Weight: {{exercice.weight}}</div>
       </div>
 
-<!--       <button mat-stroked-button (click)="openDialog()">
-        <mat-icon>add</mat-icon>
-      </button> -->
+
       <div class = "buttons">
 
-      <app-delete-button (delete)="handleDelete(exercice)">
+        <app-delete-button (delete)="handleDelete(exercice)">
+        </app-delete-button>
+
+        <button class = "modify" mat-stroked-button (click)="openDialogExercice(exercice,i)">
+          Modify
+        </button>
+
+      </div>
 
 
-      </app-delete-button>
-
-      <button class = "modify" mat-stroked-button (click)="openDialogExercice(exercice,i)">
-        Modify
-      </button>
-</div>
     </div>
 
+    <div *ngIf="allChecked" class="completion-message">Félicitations ! Tous les exercices ont été complétés.</div>
 
   </div>
