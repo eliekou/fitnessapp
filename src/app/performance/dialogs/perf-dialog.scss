@@ -7,7 +7,17 @@
 .toggle{
 
 }
-
+mat-button{
+  margin-top: 2vw;
+  margin-left:0px;
+  border: 2px solid pink;
+}
+.final{
+  margin-top: 2vw;
+  margin-left:0px;
+  border: 2px solid pink;
+  size:50%;
+}
 .fields{
   display:flex;
   flex-direction: column;

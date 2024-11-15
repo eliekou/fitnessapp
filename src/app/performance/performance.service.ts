@@ -47,9 +47,11 @@ export class PerformanceService {
 
   updatePerformancesForUser(userDocId, perfId, perfs: Performance[]){
     //perfId est egal a l'uid sur le document
+    console.log("UPDATE CALLED");
+
     return this.db.collection('user')
       .doc(userDocId)
-      .collection('performance')
+      .collection('performances')
       .doc(perfId)
       .update({perfs});
 

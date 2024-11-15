@@ -1,7 +1,8 @@
-import { Inject ,Component } from '@angular/core';
+import { Inject ,Component, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { PerformanceService } from '../performance.service';
 import { provideNativeDateAdapter} from '@angular/material/core';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-perf-dialog',
@@ -26,21 +27,23 @@ import { provideNativeDateAdapter} from '@angular/material/core';
           matInput
           [(ngModel)]="data.perf_value_kg"
         >Weights</textarea>
+
+        @if (data.perf_value_kg.invalid) {
+      <mat-error>{{errorMessage()}}</mat-error>
+    }
       </mat-form-field>
 
-      <mat-form-field class ="third">
-        <textarea
-          placeholder="Date"
-          matInput
-          [(ngModel)]="data.perf_date"
-        >Date</textarea>
+      <mat-form-field floatLabel="always">
+        <mat-label>Reps</mat-label>
+        <input matInput type="number"  [(ngModel)]="data.perf_reps" class="example-right-align" placeholder="0" />
+        <!-- <span matTextPrefix>$&nbsp;</span>
+        <span matTextSuffix>.00</span> -->
       </mat-form-field>
-      </div>
 
 
       <mat-form-field class ="third">
         <mat-label>Choose a date</mat-label>
-        <input matInput [matDatepicker]="picker">
+        <input matInput [matDatepicker]="picker" [(ngModel)]="data.perf_date">
         <mat-hint>MM/DD/YYYY</mat-hint>
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
@@ -52,7 +55,7 @@ import { provideNativeDateAdapter} from '@angular/material/core';
 
         <mat-button-toggle-group
           #group="matButtonToggleGroup"
-          [(ngModel)]="data.sucess"
+          [(ngModel)]="data.perf_sucess"
           class="third">
           <mat-button-toggle class = "toggle"*ngFor="let opt of [false,true]" [ngClass]="{'sucess':opt, 'failure':!opt}"[value]="opt">
             {{opt}}
@@ -65,9 +68,9 @@ import { provideNativeDateAdapter} from '@angular/material/core';
 
 
     </div>
-    <div mat-dialog-actions>
+    <div mat-dialog-actions class ="final">
         <button mat-button [mat-dialog-close]="data">
-          Add performance
+          Add performance !
         </button>
     </div>
   `,
@@ -81,6 +84,8 @@ export class PerfDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
   ){}
 
-  labelOptions = ['Incline Chest','Shoulder Press','Lateral Raises','Tricep Cable','Bicep Cable','squat','deadlift','Arm curls']
+  labelOptions = ['Bench Press','Incline Chest','Shoulder Press','Lateral Raises','Tricep Cable','Bicep Cable','Squat','Deadlift','Arm curls']
+  readonly perf_value_kg = new FormControl('', [Validators.required]);
+  errorMessage = signal('');
 
 }
