@@ -51,6 +51,7 @@ export class TrainingComponent {
           console.log("Checked",this.isChecked);
           this.isStarted = Array(this.training.exercices.length).fill(false);
           console.log("Started",this.isStarted);
+
         }
         )
   }
@@ -128,12 +129,10 @@ export class TrainingComponent {
   }
 
   get allChecked(): boolean{
-/*     if (this.isChecked.every(value => value === true)== true){
-      console.log("Exercice finished");
-      const dialogRef = this.dialog.open(CompletionDialogComponent);
-    } */
-    //const dialogRef = this.dialog.open(CompletionDialogComponent);
-    return (this.isChecked.every(value => value === true)== true);
+    if (this.isChecked != undefined){
+      return (this.isChecked.every(value => value === true)== true);
+    }
+    return false;
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['isChecked']) {

@@ -110,28 +110,9 @@ export class PerformancesListComponent {
   }
 
   filterExerciceByName(name: String){
-
-    /* this.perfService.getUserPerformances(this.userDocId, this.uid)
-        .subscribe(
-          (result) => {
-            this.filteredPerformances = result[0]['perfs'].filter(
-              (perf) => (perf.name == name)
-            )
-            console.log("filtered Performances", this.filteredPerformances)
-          }
-
-    ) */
-
-    /* this.performances.filter(
-      (perf)=>(perf.perf_name == name)
-    );
-    console.log("filtered Performances", this.performances) */
-    /* this.filteredPerformances = this.performances.filter(
-       (perf)=>(perf.perf_name == name)); */
-
       if (name) {
         this.filteredPerformances = this.performances.filter(
-          (perf) => perf.perf_name === name || perf.perf_name.toLowerCase() === name
+          (perf) => perf.perf_name.toLowerCase() === name.toLowerCase() || perf.perf_name.toLowerCase() === name
         );
       } else {
         // If no filter is applied, show all performances.
