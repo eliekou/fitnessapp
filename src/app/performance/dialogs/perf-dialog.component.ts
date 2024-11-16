@@ -27,9 +27,9 @@ import { FormControl, Validators } from '@angular/forms';
           matInput
           [formControl]="perf_value_kg"
           [(ngModel)]="data.perf_value_kg"
-        >Weights</textarea>
+        >Weights (kg)</textarea>
         <mat-error *ngIf="perf_value_kg.hasError('required')">
-            Le nombre de répétitions est requis.
+            Le poids est requis.
           </mat-error>
       </mat-form-field>
 
@@ -49,7 +49,8 @@ import { FormControl, Validators } from '@angular/forms';
 
       <mat-form-field class ="third">
         <mat-label>Choose a date</mat-label>
-        <input matInput [matDatepicker]="picker" [(ngModel)]="data.perf_date">
+        <input matInput [matDatepicker]="picker" [(ngModel)]="data.perf_date"
+        [formControl]="perf_date">
         <mat-hint>MM/DD/YYYY</mat-hint>
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
@@ -69,7 +70,6 @@ import { FormControl, Validators } from '@angular/forms';
 
         </mat-button-toggle-group>
         <br>
-
       </div>
 
 
@@ -96,6 +96,7 @@ export class PerfDialogComponent {
   labelOptions = ['Bench Press','Incline Chest','Shoulder Press','Lateral Raises','Tricep Cable','Bicep Cable','Squat','Deadlift','Arm curls']
   readonly perf_value_kg = new FormControl('', [Validators.required]);
   readonly perf_reps = new FormControl('', [Validators.required]);
+  readonly perf_date = new FormControl('', [Validators.required]);
   errorMessage = signal('');
 
 }

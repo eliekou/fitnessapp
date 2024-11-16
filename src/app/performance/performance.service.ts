@@ -4,6 +4,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { switchMap } from 'rxjs';
 import { user } from'./../home/user.model';
 import { Performance } from "./performance.model";
+import firebase from 'firebase/compat/app';
 
 @Injectable({
   providedIn: 'root'
@@ -54,8 +55,21 @@ export class PerformanceService {
       .collection('performances')
       .doc(perfId)
       .update({perfs});
-
   }
+
+  deletePerformanceOfUser(userDocId, perfId, perf: Performance){
+    console.log("Delete Called");
+
+    return this.db.collection('user')
+                  .doc(userDocId)
+                  .collection('performances')
+                  .doc(perfId)
+                  .update({
+                    perfs:firebase.firestore.FieldValue.arrayRemove(perf)
+                  });
+  }
+
+
 
 
 }
