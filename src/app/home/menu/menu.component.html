@@ -1,3 +1,4 @@
+<div *ngIf="afAuth.authState| async as user">
 
 <div class="menu-container">
 
@@ -19,5 +20,11 @@
 
 </div>
 
+</div>
+
+<div *ngIf="!(afAuth.authState| async) as user">
+  <h1> Seems like you are not connected... </h1>
+  <button mat-stroked-button class="training-button" routerLink="/login"> Click to login </button>
+</div>
 
 

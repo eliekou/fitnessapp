@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { HomeService } from '../home.service';
 import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -15,7 +16,7 @@ export class MenuComponent {
   sub:Subscription;
   userM;
 
-  constructor(private db:AngularFirestore, private afAuth:AngularFireAuth,private home:HomeService){
+  constructor(private db:AngularFirestore, public afAuth:AngularFireAuth,private home:HomeService){
 
   }
 
