@@ -14,13 +14,20 @@ export class PerformancesListComponent {
 
   performances: Performance[];
 
+  filteredPerformances: Performance[];
+
   userDocId;
 
   uid;
 
   sub: Subscription;
 
-  displayedColumns: string[] = ['demo-perf_name', 'demo-perf_value', 'demo-perf_reps', 'demo-perf_date'];
+  filterName: String = "";
+
+  displayedColumns: string[] = ['demo-perf_name', 'demo-perf_value', 'demo-perf_reps', 'demo-perf_date', 'demo-perf_actions'];
+
+  labelOptions = ['Bench Press','Incline Chest','Shoulder Press','Lateral Raises','Tricep Cable','Bicep Cable','Squat','Deadlift','Arm curls']
+
   constructor(private perfService: PerformanceService, private dialog: MatDialog){
 
   }
@@ -32,28 +39,44 @@ export class PerformancesListComponent {
         console.log(result);
         this.userDocId = result[0].id;
         this.uid = result[0].uid;
-        this.perfService.getUserPerformances(this.userDocId,this.uid).subscribe(
-          (result) => {
-          console.log(result)
 
-          this.performances = result[0]['perfs'];
-
-          for ( let i = 0; i < this.performances.length; i ++){
-            this.performances[i].perf_date2 = this.performances[i].perf_date.toDate().toLocaleDateString('fr-FR', {
-              weekday: 'long', // affiche le jour de la semaine (ex. : jeudi)
-              year: 'numeric',
-              month: 'long', // affiche le mois complet (ex. : novembre)
-              day: 'numeric'
-            });;
-          }
-
-          console.log(this.performances)
-          });
+        this.getPerformances(this.filterName);
 
       }
     )
   }
 
+  convertTimeStamp(){
+    for ( let i = 0; i < this.performances.length; i ++){
+      console.log(i,"converted")
+      this.performances[i].perf_date2 = this.performances[i].perf_date.toDate().toLocaleDateString('fr-FR', {
+        weekday: 'long', // affiche le jour de la semaine (ex. : jeudi)
+        year: 'numeric',
+        month: 'long', // affiche le mois complet (ex. : novembre)
+        day: 'numeric'
+      });;
+    }
+  }
+
+  getPerformances(filterName?){
+    this.perfService.getUserPerformances(this.userDocId,this.uid).subscribe(
+      (result) => {
+      console.log(result)
+
+      this.performances = result[0]['perfs'];
+
+
+
+      this.filteredPerformances = [...this.performances];
+
+      if (filterName){
+        this.filterExerciceByName(filterName)
+      }
+      this.convertTimeStamp();
+
+      console.log(this.performances)
+      });
+  }
   openDialog(){
     const dialogRef = this.dialog.open(PerfDialogComponent,
       {
@@ -63,7 +86,8 @@ export class PerformancesListComponent {
             perf_value_kg:"",
             perf_reps:"",
             perf_date:"",
-            perf_sucess:""
+            perf_sucess:"",
+            perf_date2:"",
         }
       })
 
@@ -79,6 +103,41 @@ export class PerformancesListComponent {
           }
         }
       )
+  }
+
+  handleDelete(perf: Performance){
+    return this.perfService.deletePerformanceOfUser(this.userDocId, this.uid, perf);
+  }
+
+  filterExerciceByName(name: String){
+
+    /* this.perfService.getUserPerformances(this.userDocId, this.uid)
+        .subscribe(
+          (result) => {
+            this.filteredPerformances = result[0]['perfs'].filter(
+              (perf) => (perf.name == name)
+            )
+            console.log("filtered Performances", this.filteredPerformances)
+          }
+
+    ) */
+
+    /* this.performances.filter(
+      (perf)=>(perf.perf_name == name)
+    );
+    console.log("filtered Performances", this.performances) */
+    /* this.filteredPerformances = this.performances.filter(
+       (perf)=>(perf.perf_name == name)); */
+
+      if (name) {
+        this.filteredPerformances = this.performances.filter(
+          (perf) => perf.perf_name === name || perf.perf_name.toLowerCase() === name
+        );
+      } else {
+        // If no filter is applied, show all performances.
+        this.filteredPerformances = [...this.performances];
+      }
+      console.log("Filtered Performances", this.filteredPerformances);
   }
 
 }

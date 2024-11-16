@@ -3,7 +3,21 @@
   <mat-icon>add</mat-icon>
 </button>
 
-<table mat-table [dataSource]="performances" class="mat-elevation-z8 demo-table">
+<div>
+   <input matInput type ="text" [(ngModel)]="filterName" placeholder="Enter exercise name" />
+
+<!--   <mat-form-field>
+    <mat-label>Exercice to select</mat-label>
+    <mat-select [(ngModel)]="filterName" class="first">
+      <mat-option *ngFor="let opt of labelOptions" [value]="opt"  >{{opt}}</mat-option>
+    </mat-select> -->
+    <button mat-stroked-button (click)="filterExerciceByName(filterName)">Filter</button>
+
+<!--   </mat-form-field> -->
+</div>
+
+
+<table mat-table [dataSource]="filteredPerformances" class="mat-elevation-z8 demo-table">
   <!-- Position Column -->
   <ng-container matColumnDef="demo-perf_name">
     <th mat-header-cell *matHeaderCellDef> Exercice </th>
@@ -28,6 +42,13 @@
     <td mat-cell *matCellDef="let element"> {{element.perf_date2}} </td>
   </ng-container>
 
+  <ng-container matColumnDef="demo-perf_actions">
+    <th mat-header-cell *matHeaderCellDef> Actions </th>
+    <td mat-cell *matCellDef="let element">
+      <app-delete-button class="del-button" (delete)="handleDelete(element)"></app-delete-button>
+    </td>
+  </ng-container>
+
 
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -35,6 +56,10 @@
   [ngClass]="{'row-success': myrow.perf_sucess, 'row-failure': !myrow.perf_sucess}"
   ></tr>
 </table>
+
+
+
+
 
 
 
