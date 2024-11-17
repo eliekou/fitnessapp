@@ -7,10 +7,11 @@ const routes: Routes = [/* {path:'',component:HomepageComponent}, */
 
 
 /*   {path:'login',component:LoginPageComponent} */
-{path: '', loadChildren: () => import('./user/user.module').then(m => m.UserModule)},
+  {path: '',  loadChildren: () => import('./user/user.module').then(m => m.UserModule)},
   {path: 'login', loadChildren: () => import('./user/user.module').then(m => m.UserModule)},
-  {path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomeModule)},
-  {path: 'training',loadChildren: () => import('./train/train.module').then(m=>m.TrainModule)}
+  {path: 'home',  loadChildren: () => import('./home/home.module').then(m => m.HomeModule)},
+  {path: 'training',  loadChildren: () => import('./train/train.module').then(m=>m.TrainModule)},
+  {path: 'performances', loadChildren: () => import('./performance/performance.module').then(m=>m.PerformanceModule)}
 ];
 
 @NgModule({
