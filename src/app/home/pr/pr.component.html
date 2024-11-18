@@ -17,10 +17,10 @@
 </mat-card> -->
 
 
-<mat-card-content class="track-cont" *ngIf="userM && userM[0].tracker">
+<mat-card-content class="track-cont" *ngIf="userM && userM.tracker">
  <!--  <mat-list> -->
     <mat-icon mat-list-icon>fitness_center</mat-icon>
-    <mat-list-item *ngFor="let item of userM[0].tracker | keyvalue">
+    <mat-list-item *ngFor="let item of userM.tracker | keyvalue">
       <div mat-line>{{ item.key }}: {{ item.value }}</div>
     </mat-list-item>
 <!--     <mat-icon mat-list-icon>fitness_center</mat-icon>
